@@ -1,0 +1,126 @@
+-url = url_for("#{request.script_name}")
+-if url.match("/admin")
+  -url_2 = url[0, url.length - 6]
+
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3
+      Gruppe #{group_id}
+    %h4 Gruppenmitglieder
+    .well
+      .span3
+        -if !(members[:item] == "EMPTY")
+          %ul.unstyled.memberlist.clearfix
+            -#Gruppenmitglieder
+            -#%br
+            -array(members[:item]).each do |member_id|
+              %li.pull-left
+                -redis_user = User[member_id]
+                %a(rel="popover" data-original-title="#{redis_user.firstname} #{redis_user.lastname}" data-content="#{h redis_user.about}" data-placement="top" data-trigger="hover")
+                  -#{:href => url_for("/profile/#{member_id}")}
+                  %img.img-rounded{:src=>url_for("#{url_2}"+ redis_user.picture_small)}
+                #{redis_user.firstname}
+                %br
+                #{redis_user.lastname}
+                %br
+                (ID: #{member_id})
+      .well.debug
+        Gruppenmitglieder
+        = members
+      -if rank[:error] == nil
+        .clearfix
+        .span6
+          %table.table
+            %thead
+              %tr
+                %th Punkte
+                %th gelöste Aufgaben
+                %th Fehlversuche
+                %th Tauschzähler
+
+            %tbody
+              %tr
+                %td= rank[:scores]
+                %td= rank[:cards]
+                %td= rank[:wrong_tries]
+                %td= rank[:exchange_counter]
+      %br
+      %br
+      %br
+      %br
+      %br
+    %h4 eine Überschrift
+    .well
+      .span3
+        Aufgabe als richtig gelöst markieren:
+        %form{:action => url_for("#{request.script_name}/group/interaction/give"), :method => "post"}
+          %fieldset
+          .controls
+            %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group_id}
+          .controls
+            %input.input-small.fullwidth-phone(name="interaction_id" placeholder="ID" type="text" required="required")
+          %button{:type => :submit, :class => "btn"} geben
+      .span3
+        Aufgabe als falsch gelöst markieren:
+        %form{:action => url_for("#{request.script_name}/group/interaction/take"), :method => "post"}
+          %fieldset
+          .controls
+            %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group_id}
+          .controls
+            %input.input-small.fullwidth-phone(name="interaction_id" placeholder="ID" type="text" required="required")
+          %button{:type => :submit, :class => "btn"} entfernen
+      .span3
+        Fehlversuche um X zurücksetzen:
+        %form{:action => url_for("#{request.script_name}/group/wrong_attempts/decrement"), :method => "post"}
+          %fieldset
+          .controls
+            %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group_id}
+          .controls
+            %input.input-small.fullwidth-phone(name="decrement_wrong_attempts" placeholder="1" type="text" required="required")
+          %button{:type => :submit, :class => "btn"} zurücksetzen
+      %br
+      %br
+      %br
+      %br
+      %br
+    %h4 Gelöste Aufgaben
+    .well
+      Liste aller IDs der gelösten Aufgaben
+    %h4 Aktive Aufgaben
+    .well
+      Liste aller IDs der verfügbaren Aufgaben
+    %h4 eine Überschrift
+    .well
+      .span3
+        Spieler aus der Gruppe entfernen:
+        %form{:action => url_for("#{request.script_name}/group/remove/player"), :method => "post"}
+          %fieldset
+          .controls
+            %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group_id}
+          .controls
+            %input.input-small.fullwidth-phone(name="player_id" placeholder="ID" type="text" required="required")
+          %button{:type => :submit, :class => "btn"} entfernen
+      .span3
+        Spieler hinzufügen:
+        %form{:action => url_for("#{request.script_name}/player/add/group"), :method => "post"}
+          %fieldset
+          .controls
+            %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group_id}
+          .controls
+            %input.input-small.fullwidth-phone(name="player_id" placeholder="ID" type="text" required="required")
+          %button{:type => :submit, :class => "btn"} hinzufügen
+      .span3
+        Gruppe sperren:
+        %form{:action => url_for("#{request.script_name}/group/disable"), :method => "post"}
+          %fieldset
+          .controls
+            %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group_id}
+          %button{:type => :submit, :class => "btn"} sperren
+
+      %br
+      %br
+      %br
+      %br
+      %br

@@ -1,0 +1,53 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+  
+  
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li.active Frage erstellen
+    
+.page-header 
+  %h1 
+    Frage erstellen
+
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+    .span9
+      %legend
+      .control-group
+        .controls
+          .dropdown
+            %button#dropdownMenu2.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              Fragetyp auswählen:
+              %span.caret
+            %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+              %li
+                %a{:href=>url_for("/adminView/SingleChoiceFrage")}Single-Choice Frage              
+              %li
+                %a{:href=>url_for("/admin/MultipleChoiceFrage")}Multiple-Choice Frage
+              %li
+                %a{:href=>url_for("/adminView/TextEntryInteraction")}TextEntryInteraction  
+              %li
+                %a{:href=>url_for("/adminView/InlineChoiceInteraction")}InlineChoiceInteraction
+              %li
+                %a{:href=>url_for("/adminView/MatchInteraction")}MatchInteraction
+              %li
+                %a{:href=>url_for("/adminView/OrderInteraction")}OrderInteraction    
+              %li
+                %a{:href=>url_for("/adminView/SelectPointInteraction")}SelectPointInteraction
+              %li
+                %a{:href=>url_for("/adminView/GPSInteraction")}GPSInteraction
+               
+        .form-actions.bg-white      
+          %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+               
+       
+            

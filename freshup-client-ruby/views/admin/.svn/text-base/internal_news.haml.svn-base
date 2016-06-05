@@ -1,0 +1,23 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3 Neue interne Nachricht
+    .well.form-inline
+      %form{:action => url_for("internal/news"), :method => "post"}
+        %fieldset
+        .controls
+          %textarea#inputContent.input-xlarge(name="internal_news_text" rows="4" required="required" placeholder="" style="height:80px; width:95%;")
+        %button{:type => :submit, :class => "btn"} abschicken
+
+      %form{:action => url_for("internal/news/delete"), :method => "post"}
+        %button{:type => :submit, :class => "btn"} alle Nachrichten löschen
+    -if news
+      .well.form-inline
+        %h3 Interne Nachrichten
+        -news_kind = "internal"
+        .well.debug
+          Newsart 456
+          =news_kind
+        .clearfix
+        =partial :'/admin/show_news', :locals => {:news => news, :news_kind => news_kind}

@@ -1,0 +1,28 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  %h3 Rallyeaufgaben
+  .well
+    %table.table
+      %thead
+        %tr
+          %th Deck-Id
+          %th Deck-Name
+          %th an alle Gruppen verteilen
+
+
+      %tbody
+        - array(rallye[:decks]).each do |deck|
+          - if defined? deck
+            %tr
+              %td= deck[:id]
+              %td= deck[:name]
+              %td
+                %form{:action => url_for("#{request.script_name}/rallye"), :method => "post"}
+                  %fieldset
+                  .controls
+                    %input.input-small.fullwidth-phone(type="hidden" name="deckname"){:value=>deck[:name]}
+                  %button{:type => :submit, :class => "btn"} verteilen
+
+-# ToDO: nur ein Rallye-Deck vergeben
+

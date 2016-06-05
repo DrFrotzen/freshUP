@@ -1,0 +1,53 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3
+      Neue Gruppe hinzufügen
+      .well.form-inline
+        %form{:action => url_for("#{request.script_name}/group/create"), :method => "post"}
+          .control-group
+            %label.control-label(for="studycourse") Studiengang / Fakultät
+            .controls
+              %select#studycourse(name="studycourse" required="true")
+                %option(disabled="true" selected="true" value="") Bitte Studiengang angeben
+                - locals[:courses].each do |course|
+                  %option{:value => course[:id]}
+                    = course[:name]
+            %button{:type => :submit, :class => "btn"} Gruppe anlegen
+    %h3
+      Gruppenübersicht
+
+    .well
+      %table.table
+        %thead
+          %tr
+            %th id
+            %th Name
+            %th StudiengangId
+            %th aktiv
+            %th hat noch Platz
+            %th ist leer
+            %th Aufgaben
+            -if game_phase
+              %th weitere Aufgaben
+
+        %tbody
+          - locals[:groups].each do |group|
+            %tr
+              %td= group[:id]
+              %td
+                %a{:href=>'group/'+group[:id]}
+                  = group[:name]
+              %td= group[:studycourse]
+              %td= group[:active]
+              %td= group[:not_full]
+              %td= group[:empty]
+              %td= group[:open_tasks] + " / " + max_interaction
+              -if game_phase
+                %td
+                  %form{:action => url_for("#{request.script_name}/groups/interaction"), :method => "post"}
+                    %fieldset
+                    .controls
+                      %input.input-small.fullwidth-phone(type="hidden" name="group_id"){:value=>group[:id]}
+                    %button{:type => :submit, :class => "btn"} verteilen

@@ -1,0 +1,48 @@
+.hero-unit
+  %h1 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3
+      Spielstatus
+    %p
+    .well.form-inline 
+      %form{:action => url_for("#{request.script_name}/game/start"), :method => "post"}
+        %label Spielstatus:
+        %span.input-small.uneditable-input
+          = game_state
+        %button{:type => :submit, :class => "btn"} Spiel starten
+    
+    %t3 Bonusaufgaben
+    .well
+      %table.table
+        %thead
+          %tr
+            %th id
+            %th Typ
+            %th Kategorie
+            %th 
+            
+        %tbody
+          - bonus[:aufgaben].each do |bonus|
+            %tr
+              %td= bonus[:id]
+              %td= bonus[:type]
+              %td= bonus[:category]
+              %td
+                %a{:href=>'#'} verteilen
+      
+      =bonus
+      
+    -# so macht man das:
+      %form.well.form-inline
+        %input.input-small{:placeholder => "Email", :type => "text"}/
+        %input.input-small{:placeholder => "Password", :type => "password"}/
+        %label.checkbox
+          %input{:type => "checkbox"}/
+          Remember me
+        %button.btn{:type => "submit"} Sign in
+
+    .clearfix
+
+  

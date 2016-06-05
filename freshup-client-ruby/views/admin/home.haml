@@ -1,0 +1,21 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+
+.page-header 
+  %h1
+    Administrator
+  
+.bg-white
+  .row
+    .span3          
+      = partial :admin_connections
+
+        
+ 

@@ -1,0 +1,54 @@
+
+  
+  
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/admin/TextEntryInteraction")} TextEntryInteraction
+    
+.page-header 
+  %h1 
+    TextEntryInteraction
+  
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+      
+    .span9    
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/TextEntryInteractionAntwortII")}
+        %legend
+          Antwort erstellen
+        .control-group
+          %label.control-label(for="entryAntwort")
+          .controls
+            %input.input-xlarge{:name => "id", :type => "hidden" , :value =>@antwort}
+            Starttext:
+            =@antwort[:start_text]
+            %br
+            Endtext:
+            =@antwort[:end_text]
+
+            %h5
+              Antwort(Pattern)            
+            %p
+              %select.input-xlarge{:name => "pattern"}
+                %option{:value=>@pattern_mask[:pattern]}=@pattern_mask[:pattern]
+                = @pattern.each_with_index do |key,i|
+                  %option{:value=>@pattern[i][:id]}="Name: "+key[:pattern]
+
+            -@pattern.each_with_index do |key,i|
+              %li
+                Pattern:
+                =key[:pattern]
+                %br
+                %font{:color => "red"}
+                  =key[:explanation]
+                          
+            .form-actions.bg-white      
+              %button.btn.btn-primary.btn-large.btn-block-phone(type="submit") Weiter
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/TextEntryInteraction")} Zurück
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen

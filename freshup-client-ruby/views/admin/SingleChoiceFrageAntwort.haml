@@ -1,0 +1,56 @@
+
+  
+  
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/admin/SingleChoiceFrage")} SingleChoiceFrage
+    %span.divider /  
+  %li.active Antwort erstellen
+    
+.page-header 
+  %h1 
+    SingleChoiceFrage
+  
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+      
+    .span9    
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/SingleChoiceFrageAntwortII")}
+        %legend
+          Antwort erstellen
+        .control-group
+          %label.control-label(for="singleAntwort")
+          .controls
+            %input.input-xlarge{:name => "id", :type => "hidden" , :value =>@antwort}
+            Fragetext:
+            =@antwort[:prompt]
+            %h5
+              Antworten            
+            %p
+              -@karte[:choices].each_with_index do |value,i|
+                %p
+                  %input.input-xlarge{:name=>"antworten[]",:type=>"text", :value => value[:text]}    
+                    -if (@correctAntwort.any? { |value2| value2[:text]==value[:text]}) 
+                      %input{:name => "antwortButton_#{i}", :type => "radio", :value => "w", :style => "margin-bottom:5px", :checked=>"checked"}
+                        %label{:style => "display:inline-block"} Richtig
+                      %input{:name => "antwortButton_#{i}", :type => "radio", :value => "f", :style => "margin-bottom:5px"}
+                        %label{:style => "display:inline-block"} Falsch
+                    -else
+                      %input{:name => "antwortButton_#{i}", :type => "radio", :value => "w", :style => "margin-bottom:5px"}
+                        %label{:style => "display:inline-block"} Richtig                    
+                      %input{:name => "antwortButton_#{i}", :type => "radio", :value => "f", :style => "margin-bottom:5px", :checked=>"checked"}
+                        %label{:style => "display:inline-block"} Falsch
+
+
+              
+        
+            .form-actions.bg-white      
+              %button.btn.btn-primary.btn-large.btn-block-phone(type="submit") Weiter
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/SingleChoiceFrage")} Zurück
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen

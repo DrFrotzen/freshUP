@@ -1,0 +1,4 @@
+-# Partial für die externen Mitteilungen
+#extern-news.well{:style => 'background-color:#FFFFFF;'}
+  -if news
+    = partial :'/admin/news', :collection => news, :locals => {:news_kind => news_kind}

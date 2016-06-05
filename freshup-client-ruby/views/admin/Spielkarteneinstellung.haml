@@ -1,0 +1,97 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+  
+  
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li.active Spielkarteneinstellung
+    
+.page-header 
+  %h1 
+    Spielkarteneinstellung
+
+.bg-white
+  .row     
+    .span3
+      = partial :admin_connections
+      
+    .span9
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/SpielkarteneinstellungSpieler")}
+        .control-group
+          %label.control-label(for="auswahlSpieler")
+            Karte einem Spieler zuordnen.
+          .controls
+            Spieler wählen:
+            .dropdown 
+              %select.input-xlarge{:name => "player", :required => ""}
+                %option{:value=>""}None                  
+                -if (@spieler == [])
+                  = @spieler_liste.each_with_index do |key,i| 
+                    %option{:value => @spieler_liste[i][:player_id]}=key[:last_name]+","+key[:first_name]+","+key[:player_id]                                         
+                -else
+                  = @spieler.each do |key|
+                    %option{:value => key[:player_id]}=key[:last_name]+","+key[:first_name]+","+key[:player_id]
+  
+            %p{:style => "float:right"}    
+              %button.btn.btn-primary.btn-block-phone{:type => :submit} Weiter
+              %a.btn.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+          
+         
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/Spielkarteneinstellung")}
+        %legend
+        .control-group
+          %label.control-label(for="antworttypSpieler")
+            Spieler suchen.
+          .controls        
+            Spieler ID:
+            %p
+              %input.input-xlarge(name="playerid" type="text" placeholder="z.Bsp.: 007")     
+          .controls
+            Vorname:
+            %p
+              %input.input-xlarge(name="firstname" type="text" placeholder="z.Bsp.: Dirk")     
+          .controls
+            Nachname:
+            %p
+              %input.input-xlarge(name="lastname" type="text" placeholder="z.Bsp.: Meier")     
+              
+            %button.btn.btn-primary.btn-block-phone{:type => :submit} Suchen
+
+      -#Muss noch bearbeitet werden!!!!Gruppensuche        
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/SpielkarteneinstellungGruppe")}
+        %legend
+        .control-group
+          %label.control-label(for="auswahlGruppe")
+            Karte einer Gruppe zuordnen.
+          .controls
+            Gruppe wählen:
+            .dropdown 
+              %select.input-xlarge{:name => "player_id",:required=>""}
+                %option{:value=>""}None
+                -if (@gruppen_liste[:error] != nil)
+                  = @gruppen_liste[:player].each do |key|
+                    %option{:value => key[:player_id]}=key[:last_name]+","+key[:first_name]+","+key[:player_id]
+            %p{:style => "float:right"}
+              %button.btn.btn-primary.btn-block-phone{:type => :submit} Weiter
+              %a.btn.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/Spielkarteneinstellung")}
+        %legend
+        .control-group
+          %label.control-label(for="antworttypGruppe")
+            Gruppe suchen.
+          .controls        
+            Gruppen ID:
+            %p
+              %input.input-xlarge(name="taskid" type="text" placeholder="z.Bsp.: 73")     
+      
+            %button.btn.btn-primary.btn-block-phone{:type => :submit} Suchen
+  
+            
+               
+  

@@ -1,0 +1,63 @@
+#frageOptionen.control
+  .control-group
+    - group ||= []
+  
+  .control-group
+    Optionen wählen
+  
+  .control-group
+    %label.control-label(for="inputUser")
+      Description:
+    .controls   
+      %textarea#description.input-xlarge(name="description" rows="4" placeholder="...")=@description
+    
+  .control-group
+    %label.control-label(for="inputEmail")
+      Titel*:
+    .controls
+      .input-prepend
+        %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="email@uni-potsdam.de"){:value => "#"}
+          =locals[:title]
+  .control-group
+    %label.control-label(for="inputEmail")
+      Id*:
+    .controls
+      .input-prepend
+        %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="Id wird generiet, keine Eingabe!!"){:value => "#"}    
+    
+  .control-group
+    %label.control-label(for="inputEmail")
+      Deck*:
+    .controls
+      .dropdown 
+        %button#dropdownMenu2.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Bitte auswählen
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+          %li
+            %a{:href=>"#"}       
+
+  .control-group
+    %label.control-label(for="inputEmail")
+      validAttemptCount*:
+    .controls
+      .input-prepend
+        %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="email@uni-potsdam.de"){:value => "#"}    
+                  
+
+  .control-group
+    %label.control-label(for="inputEmail")
+      check_type:
+    .controls
+      .dropdown
+        %button#dropdownMenu2.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Bitte auswählen
+          %span.caret                
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+          %li
+            %a{:href=>"#"}       
+        
+  .control-group
+    .controls
+      %button#hiddensee.btn.btn-block-phone{:style => "float:right", :type => "button"} erweiterte Optionen
+ 

@@ -1,0 +1,71 @@
+:javascript
+  function weiter2() 
+    {var e = document.getElementById("inputCourse");
+    if ((document.getElementById("rangEins").checked  == true) || (document.getElementById("rangDrei").checked  == true))
+      e.setAttribute('disabled', 'disabled');
+      e.value="";
+    if (document.getElementById('rangZwei').checked  == true)
+      e.removeAttribute('disabled');      
+    }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li.active Administrator ernennen
+
+    
+.page-header 
+  %h1 
+    Administrator ernennen
+
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+    .span9 
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/admin_ernennen")}
+        .control-group
+          %label.control-label
+          .controls        
+            Benutzername:
+            %p
+              %input.input-xlarge(name="username" type="text")
+          .controls        
+            Passwort:
+            %p
+              %input.input-xlarge(name="password" type="password")
+          .controls        
+            Passwort wiederholen:
+            %p
+              %input.input-xlarge(name="wpassword" type="password")
+          .controls       
+            Kurs:
+            .dropdown
+              %select#inputCourse.input-xlarge{:name => "course", :required=>""}
+                %option{:value=>"", :selected=>""}None
+                -if (@course != {})
+                  = @course[:item].each_with_index do |key,i|
+                    %option{:value=>@course[:item][i][:id]}=key[:name]
+
+          .controls
+            %input#rangEins{:name => "rang", :onclick => "weiter2();", :type => "radio", :value => "1"}Rang 1 
+            %input#rangZwei{:name => "rang", :onclick => "weiter2();", :type => "radio", :value => "2", :checked => "checked"}Rang 2
+            %input#rangDrei{:name => "rang", :onclick => "weiter2();", :type => "radio", :value => "3"}Rang 3
+            %label
+              (Rang 1 alle Rechte, Rang 2 + Kurs, Rang 3 nur Aufgaben)
+           
+           
+           
+           
+        .form-actions.bg-white      
+          %button.btn.btn-primary.btn-large.btn-block-phone(type="submit") OK
+          %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen            
+        

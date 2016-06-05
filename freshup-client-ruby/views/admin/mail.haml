@@ -1,0 +1,48 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3 Mail
+    -# Auswahlbox des Spielers -- ID
+    -# TODO: Auswahl: alle Spieler, aller einer Gruppe, eines Studiengangs, alle ohne Gruppe
+    -# Nachrichtenfeld + Sendebutton
+    -# TODO: Auswahloption bcc
+    %p
+    .well.form-inline
+      %form{:action => url_for("mail/send"), :method => "post"}
+        .control-group
+          %label.control-label.help-block.align-left(for="player_user_ids")
+          .controls#player_user_ids
+            %label An:
+            - player.each do |p|
+              %label.checkbox
+                %input{:type => :checkbox, :name => "player_user_ids[#{p[:player_id]}]", :value => p[:player_id], :required => false}
+                  Name:
+                  =p[:first_name]
+                  =p[:last_name]
+                  GruppenID:
+                  =p[:group_id]
+                  Geschlecht:
+                  =p[:sex]
+                  .well.debug
+                    "AlleSpieler"
+                    = p[:player_id]
+                    = p[:first_name]
+                  .clearfix
+        .control-group
+          .controls
+            %label.checkbox
+              %input(type="checkbox" name="bcc" value="accept")
+              bcc an freshUP@lists.cs.uni-potsdam.de
+        %fieldset
+        .controls
+          %textarea#inputContent.input-xlarge(name="subject" rows="1" required="required" placeholder="Betreff" style="width:95%;")
+          %br
+          %br
+          %textarea#inputContent.input-xlarge(name="message" rows="8" required="required" placeholder= "Nachricht" style="width:95%;")
+        %button{:type => :submit, :class => "btn"} abschicken
+        -#.well.debug
+          -#"AlleSpieler"
+          -#= player
+          -#= player[:player]
+        -#.clearfix

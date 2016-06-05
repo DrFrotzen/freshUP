@@ -1,0 +1,26 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3
+      Ranking
+    -#.well.form-inline
+    :javascript
+      $(function($){
+        $('a').popover();
+      });
+
+    .row.mh300
+      .span9.pull-right-desktop.pull-right-tablet
+        #ranking.well
+          %table.table
+            %thead
+              %tr
+                %th #
+                %th Gruppe
+                %th Spieler
+                %th Punkte
+                %th Aufgaben gelöst
+                %th Fehlversuche
+              %tbody
+                = partial :'admin/a_ranking_group', :locals => {:ranking => ranking, :members => members}

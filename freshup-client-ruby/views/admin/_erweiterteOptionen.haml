@@ -1,0 +1,54 @@
+#erweiterteOptionen.control
+  .control.group
+    - group ||= []
+        
+#option{:style => "display:none"}
+  %legend
+  erweiterte Optionen
+    
+  .control-group
+    %label.control-label(for="inputUser")
+      time_solved:
+    .controls   
+      .input-prepend
+        %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="email@uni-potsdam.de"){:value => "#"}
+    
+  .control-group
+    %label.control-label(for="inputEmail")
+      time_not_solved:
+    .controls
+      .input-prepend
+        %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="email@uni-potsdam.de"){:value => "#"}
+
+  .control-group
+    %label.control-label(for="inputEmail")
+      is_deactivated:
+    .controls
+      .dropdown 
+        %button#dropdownMenu2.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Bitte auswählen
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+          %li
+            %a{:href=>"#"}               
+        
+  .control-group
+    %label.control-label(for="inputEmail")
+      effort:
+    .controls
+      .input-prepend
+        %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="email@uni-potsdam.de"){:value => "#"}    
+                  
+
+  .control-group
+    %label.control-label(for="inputEmail")
+      only_given_by_admin:
+    .controls
+      .dropdown
+        %button#dropdownMenu2.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Bitte auswählen
+          %span.caret                
+        %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+          %li
+            %a{:href=>"#"}                
+ 

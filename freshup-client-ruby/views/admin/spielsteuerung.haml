@@ -1,0 +1,129 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li.active Spielsteuerung
+
+.page-header 
+  %h1
+    Spielsteuerung
+  
+.bg-white
+  .row
+    .span3
+          
+      = partial :admin_connections
+      
+    .span9      
+      -#gamestate.well{:style => 'background-color:#FFFFFF;'}
+      -#.well.form-inline
+      %ul
+        -if !(game_config[:game_start] == "1970-01-01 01:00")
+          Spielstart:
+          = game_config[:game_start]
+          Uhr
+        -elsif game_config[:game_start] == "1970-01-01 01:00"
+          Die Zeit für den Spielstart wurde noch nicht festgelegt.
+        %br
+        -if !(game_config[:game_end] == "1970-01-01 01:00")
+          Spielende:
+          = game_config[:game_end]
+          Uhr
+        -elsif game_config[:game_end] == "1970-01-01 01:00"
+          Die Zeit für das Spielende wurde noch nicht festgelegt.
+        %br
+        Das Spiel befindet sich in der
+        =game_config[:phase]
+        Phase.
+        %br
+        %br
+        -if game_config[:phase] == "LOGIN"
+          %form{:action => url_for("game/start"), :method => "post"}
+            %button{:type => :submit, :class => "btn"} Spiel starten
+
+          -#.span3
+            %form{:action => url_for("group/size"), :method => "post"}
+              %fieldset
+              .controls
+                %input.input-small.fullwidth-phone(name="max_group_size" placeholder=group_size type="text" required="required")
+              %button{:type => :submit, :class => "btn"} Gruppengröße ändern
+
+          -#.span3
+            %form{:action => url_for("max/interaction"), :method => "post"}
+              %fieldset
+              .controls
+                %input.input-small.fullwidth-phone(name="max_interaction" placeholder=game_config[:max_interaction_number] type="text" required="required")
+              %button{:type => :submit, :class => "btn"} Aufgabenazahl ändern
+
+          -#.span3
+            %form{:action => url_for("exchange/counter"), :method => "post"}
+              %fieldset
+              .controls
+                %input.input-small.fullwidth-phone(name="max_exchange_counter" placeholder=exchange_counter type="text" required="required")
+              %button{:type => :submit, :class => "btn"} Tauschzähler ändern
+            %br
+          -#.span6
+          -if game_config[:phase] == "LOGIN"
+            %form{:action => url_for("game/time/start"), :method => "post"}
+              %fieldset
+                .control-group
+                  %label
+                    Start:
+                  .controls
+                    .input-prepend
+                      %input.input-small.fullwidth-phone(name="start_year" placeholder="Jahr" type="text" required="required")
+                      %input.input-small.fullwidth-phone(name="start_month" placeholder="Monat" type="text" required="required")
+                      %input.input-small.fullwidth-phone(name="start_day" placeholder="Tag" type="text" required="required")
+                      %input.input-small.fullwidth-phone(name="start_hour" placeholder="Stunde" type="text" required="required")
+                      %input.input-small.fullwidth-phone(name="start_minute" placeholder="Minute" type="text" required="required")
+                      %button{:type => :submit, :class => "btn"} Spielstartzeit setzen
+
+        -if game_config[:phase] == "GAME" || game_config[:phase] == "LOGIN"
+          %form{:action => url_for("game/time/end"), :method => "post"}
+            %fieldset
+              .control-group
+                %label
+                  Ende:
+                .controls
+                  .input-prepend                
+                    %input.input-small.fullwidth-phone(name="end_year" placeholder="Jahr" type="text" required="required")
+                    %input.input-small.fullwidth-phone(name="end_month" placeholder="Monat" type="text" required="required")
+                    %input.input-small.fullwidth-phone(name="end_day" placeholder="Tag" type="text" required="required")
+                    %input.input-small.fullwidth-phone(name="end_hour" placeholder="Stunde" type="text" required="required")
+                    %input.input-small.fullwidth-phone(name="end_minute" placeholder="Minute" type="text" required="required")
+                    %button{:type => :submit, :class => "btn"} Spielendzeit setzen
+            %br
+            %br
+            %br
+            %br
+        -if game_config[:phase] == "GAME"
+          %form{:action => url_for("game/end"), :method => "post"}
+            %button{:type => :submit, :class => "btn"} Spiel beenden
+        -if game_config[:phase] == "SUMMARY"
+          %form{:action => url_for("game/restart"), :method => "post"}
+            %button{:type => :submit, :class => "btn"} Spiel zuruecksetzen
+        -if game_config[:phase] == "PREPARATION"
+          %form{:action => url_for("game/back_login"), :method => "post"}
+            %button{:type => :submit, :class => "btn"} zurück zur Registrierungsphase
+
+
+        %br
+        -if game_config[:phase] == "GAME"
+          %h4
+            Aufgaben verteilen
+          %form{:action => url_for("game/give_interactions_to_all"), :method => "post"}
+            %button{:type => :submit, :class => "btn"} allen Gruppen & Spielern
+          %h4
+            Punkte neu Berechnen
+          %form{:action => url_for("game/recalculate_points"), :method => "post"}
+            %button{:type => :submit, :class => "btn"} Punkte berechnen
+            
+               
+        .form-actions.bg-white      
+          %a.btn.btn-large.btn-block-phone{:href=>url_for("/adminView/home")} Abbrechen

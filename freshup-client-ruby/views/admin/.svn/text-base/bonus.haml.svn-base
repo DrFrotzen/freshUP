@@ -1,0 +1,114 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  %h3 Bonusaufgaben
+  .well.debug
+    = bonus
+  .well
+    %table.table
+      %thead
+        %tr
+          %th Id
+          %th Wissensart
+          %th Deck
+          %th sichtbar ab
+          %th
+          %th
+          %th
+          %th
+          %th lösbar ab
+          %th
+          %th
+          %th
+          %th
+          %th lösbar bis
+          %th
+          %th
+          %th
+          %th
+          %th
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th Stunde
+          %th Minute
+          %th Tag
+          %th Monat
+          %th Jahr
+          %th Stunde
+          %th Minute
+          %th Tag
+          %th Monat
+          %th Jahr
+          %th Stunde
+          %th Minute
+          %th Tag
+          %th Monat
+          %th Jahr
+          %th
+
+      %tbody
+        - bonus[:meta_data].each do |bonus|
+          - time_day = Time.now.strftime("%d")
+          - time_month = Time.now.strftime("%m")
+          - time_year = Time.now.strftime("%Y")
+          - time_hour = Time.now.strftime("%H")
+          - time_minute = Time.now.strftime("%M")
+        
+          %tr
+            %td= bonus[:id]
+            %td= bonus[:type]
+            %td= bonus[:deckname]
+            %td
+              %form{:action => url_for("bonus"), :method => "post"}
+                %fieldset
+                .controls
+                  %input.input-small.fullwidth-phone(type="hidden" name="interaction_id"){:value=>bonus[:id]}
+                  %input.input-small.fullwidth-phone(name="start_date_hour" placeholder=time_hour type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="start_date_minute" placeholder=time_minute type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="start_date_day" placeholder=time_day type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="start_date_month" placeholder=time_month type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="start_date_year" placeholder=time_year type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="solvable_since_hour" placeholder=time_hour type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="solvable_since_minute" placeholder=time_minute type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="solvable_since_day" placeholder=time_day type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="solvable_since_month" placeholder=time_month type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="solvable_since_year" placeholder=time_year type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="end_date_hour" placeholder=time_hour type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="end_date_minute" placeholder=time_minute type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="end_date_day" placeholder=time_day type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="end_date_month" placeholder=time_month type="text" required="required")
+                %td
+                  .controls
+                    %input.input-small.fullwidth-phone(name="end_date_year" placeholder=time_year type="text" required="required")
+                %td
+                  %button{:type => :submit, :class => "btn"} verteilen
+          

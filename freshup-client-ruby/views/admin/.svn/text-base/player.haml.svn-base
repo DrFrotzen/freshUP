@@ -1,0 +1,59 @@
+.hero-unit
+  %h2 FreshUP Admin
+  %p Admin Oberfläche für FreshUP
+  #gamestate.well{:style => 'background-color:#FFFFFF;'}
+    %h3
+      Spieler
+      -if !(user_without_group == "nil")
+        %h4 Spieler ohne Gruppe
+        .well
+          %table.table
+            %thead
+              %tr
+                -#%th id
+                %th Name
+                %th Vorname
+                %th Studiengang
+                %th sex
+                -#Geschlecht
+                %th Fotos machen
+                %th Viedeos wiedergeben
+                %th Viedeos aufnehmen
+                %th GPS
+                %th Ton aufnehmen
+                %th Ton abspielen
+                -if game_phase
+                  %th Gruppen Id
+                  %th Gruppe zuordnen
+
+            %tbody
+              - array(user_without_group).each do |p|
+                -infos = user_infos[p.to_i]
+                %tr
+                  -#%td= p
+                  %td= infos[:last_name]
+                  %td= infos[:first_name]
+                  %td= infos[:study_courses]
+                  %td= infos[:sex]
+                  %td= infos[:photo]
+                  %td= infos[:video_play]
+                  %td= infos[:video_rec]
+                  %td= infos[:position]
+                  %td= infos[:audio_rec]
+                  %td= infos[:audio_play]
+                  -if game_phase
+                    %td
+                      %form{:action => url_for("#{request.script_name}/player/add/group"), :method => "post"}
+                        %fieldset
+                        .controls
+                          %input.input-small.fullwidth-phone(type="hidden" name="player_id"){:value=>p}
+                        .controls
+                          %input.input-small.fullwidth-phone(name="group_id" placeholder="ID" type="text" required="required" style="width:50%;")
+                        %td
+                          %button{:type => :submit, :class => "btn"} hinzufügen
+
+    %p
+      -if (user_without_group == "nil")
+        %h4 Spieler ohne Gruppe
+        .well
+          Keine Spieler ohne Gruppen vorhanden

@@ -1,0 +1,17 @@
+.alert.alert-info
+  %strong
+    = print_date_with_time news[:datum]
+  %br
+  = news[:text]
+  -if news_kind == "extanal"
+    %form{:action => url_for("external/news/delete/one"), :method => "post"}
+      %fieldset
+      .controls
+        %input.input-small.fullwidth-phone(type="hidden" name="delete_date"){:value=>news[:datum]}
+      %button{:type => :submit, :class => "btn"} Nachricht löschen
+  -if news_kind == "internal"
+    %form{:action => url_for("internal/news/delete/one"), :method => "post"}
+      %fieldset
+      .controls
+        %input.input-small.fullwidth-phone(type="hidden" name="delete_date"){:value=>news[:datum]}
+      %button{:type => :submit, :class => "btn"} Nachricht löschen

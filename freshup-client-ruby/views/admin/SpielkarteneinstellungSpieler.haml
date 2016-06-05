@@ -1,0 +1,110 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+  
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/admin/Spielkarteneinstellung")} Spielkarteneinstellung
+    %span.divider /
+  %li.active Spieler
+    
+.page-header 
+  %h1 
+    Spielkarteneinstellung (Spieler)
+
+.bg-white
+  .row      
+    .span3
+      = partial :admin_connections
+          
+    .span9
+
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/SpielkarteneinstellungSpieler")}
+        .control-group
+          %label.control-label(for="auswahlKarte")
+          .controls
+            %p
+              Karte für Spieler:         
+              %h4
+                =@auswahlSpieler[:last_name]+", "+@auswahlSpieler[:first_name]
+            %p
+              Frage wählen:
+            .dropdown 
+              %input{:type=>"hidden", :name=>"player", :value=>@auswahlSpieler[:player_id]}
+              %select.input-xlarge{:name => "kartenID",:required=>""}
+                %option{:value=>""}None
+                -if (@suchefrage != {})
+                  -if @suchefrage[:item].kind_of?(Array)
+                    = @suchefrage[:item].each_with_index do |key,i|
+                      %option{:value=>@suchefrage[:item][i][:id]}="Titel: "+key[:title]+" , ID:"+key[:id]
+                  -else
+                    = @suchefrage.each do |key|
+                      %option{:value=>@suchefrage[:item][:id]}="Titel: "+@suchefrage[:item][:title]+" , ID:"+@suchefrage[:item][:id]
+
+            %p{:style => "float:right"}
+              %button.btn.btn-primary.btn-block-phone{:type => :submit} Karte hinzufügen
+              %a.btn.btn-block-phone{:href=>url_for("/admin/Spielkarteneinstellung")} Zurück
+              %a.btn.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/SpielkarteneinstellungSpieler")}
+        %legend
+        .control-group
+          %label.control-label(for="antwortFrage")
+            Frage suchen.
+            .controls  
+              %input{:type=>"hidden", :name=>"player", :value=>@auswahlSpieler[:player_id]}
+              Frage&nbspID:
+              %p
+                %input.input-xlarge(name="id" type="text" placeholder="z.Bsp.: 73")                        
+              Titel:
+              %p
+                %input.input-xlarge(name="title" type="text" placeholder="z.Bsp.: Zahlen bitte!")
+              Group&nbspDeck: 
+              .dropdown
+                %select.input-xlarge{:name => "group_deck"}
+                  %option{:value=>"", :selected=>""}None
+                  %option{:value=>"true"}Ja
+                  %option{:value=>"false"}Nein
+              Deck&nbspID: 
+              %p
+                %input.input-xlarge(name="deck_id" type="text" placeholder="z.Bsp.: 73")
+              Deck&nbspName: 
+              .dropdown
+                %select.input-xlarge{:name => "deck_name"}
+                  %option{:value=>"", :selected=>""}None
+                  -if (@decks != {})
+                    = @decks[:item].each_with_index do |key,i|
+                      %option{:value=>@decks[:item][i][:id]}=key[:name]+" , ID:"+key[:id]
+              Kurs:
+              .dropdown
+                %select.input-xlarge{:name => "course"}
+                  %option{:value=>"", :selected=>""}None
+                  -if (@course != {})
+                    = @course[:item].each_with_index do |key,i|
+                      %option{:value=>@course[:item][i][:name]}=key[:name]
+              Type:
+              .dropdown
+                %select.input-xlarge{:name => "type"}
+                  %option{:value=>"", :selected=>""}None
+                  %option{:value=>"Action"}="Anwendungswissen"
+                  %option{:value=>"Fact"}="Faktenwissen"
+                  %option{:value=>"InstructionalKnowledge"}="Handlungswissen"
+                  %option{:value=>"Orientation"}="Orientierungswissen"
+                  
+              Check&nbspType: 
+              .dropdown
+                %select.input-xlarge{:name => "check_type"}
+                  %option{:value=>"", :selected=>""}None
+                  -if (@check_type != {})
+                    = @check_type[:item].each_with_index do |key,i|
+                      %option{:value=>@check_type[:item][i][:id]}=key[:name]+" , ID:"+key[:id]
+              Check&nbspType&nbspID:
+              %p            
+                %input.input-xlarge(name="check_id" type="text" placeholder="z.Bsp.: 73")    
+            
+              %button.btn.btn-primary.btn-block-phone{:type => :submit} Suchen

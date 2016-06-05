@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/reposMM/!svn/ver/11464/Projekte/PG4L/trunk/freshup-client-ruby/views/admin
+END
+external_news.haml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/reposMM/!svn/ver/11448/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/external_news.haml
+END
+spielsteuerung.haml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/reposMM/!svn/ver/11464/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/spielsteuerung.haml
+END
+groups.haml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/reposMM/!svn/ver/11124/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/groups.haml
+END
+mail.haml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/reposMM/!svn/ver/11351/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/mail.haml
+END
+_a_ranking_group.haml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/reposMM/!svn/ver/11122/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/_a_ranking_group.haml
+END
+bonus.haml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/reposMM/!svn/ver/11351/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/bonus.haml
+END
+index.haml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/reposMM/!svn/ver/9218/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/index.haml
+END
+internal_news.haml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/reposMM/!svn/ver/11448/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/internal_news.haml
+END
+rallye.haml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/reposMM/!svn/ver/9880/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/rallye.haml
+END
+ranking.haml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/reposMM/!svn/ver/9928/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/ranking.haml
+END
+_news.haml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/reposMM/!svn/ver/11448/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/_news.haml
+END
+_show_news.haml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/reposMM/!svn/ver/9960/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/_show_news.haml
+END
+group.haml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/reposMM/!svn/ver/11126/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/group.haml
+END
+player.haml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/reposMM/!svn/ver/10229/Projekte/PG4L/trunk/freshup-client-ruby/views/admin/player.haml
+END

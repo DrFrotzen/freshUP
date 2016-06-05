@@ -1,0 +1,114 @@
+:javascript
+  function FindPosition(oElement)
+  {
+    if(typeof( oElement.offsetParent ) != "undefined")
+    {
+      for(var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent)
+      {
+        posX += oElement.offsetLeft;
+        posY += oElement.offsetTop;
+      }
+        return [ posX, posY ];
+      }
+      else
+      {
+        return [ oElement.x, oElement.y ];
+      }
+  }
+
+  function GetCoordinates(e)
+  {
+    var PosX = 0;
+    var PosY = 0;
+    var ImgPos;
+    ImgPos = FindPosition(myImg);
+    if (!e) var e = window.event;
+    if (e.pageX || e.pageY)
+    {
+      PosX = e.pageX;
+      PosY = e.pageY;
+    }
+    else if (e.clientX || e.clientY)
+      {
+        PosX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+      PosY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+      }
+    PosX = PosX - ImgPos[0];
+    PosY = PosY - ImgPos[1];
+    var width = $("#myImg").width();
+    var height = $("#myImg").height();
+    PosX = (PosX/width)*100;
+    PosX = parseFloat(PosX).toFixed(2);
+    PosY = (PosY/height)*100;
+    PosY = parseFloat(PosY).toFixed(2);
+    document.getElementById("x").innerHTML = PosX;
+    $("#x").val(PosX);
+    
+    document.getElementById("y").innerHTML = PosY;
+    document.getElementById("y").setAttribute("value", PosY);
+  }
+
+  
+
+
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/admin/SelectPointInteraction")} SelectPointInteraction
+    
+.page-header 
+  %h1 
+    SelectPointInteraction
+  
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+      
+    .span9    
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/SelectPointInteractionAntwortII")}
+        %legend
+          Antwort erstellen
+        .control-group
+          %label.control-label(for="selectAntwort")
+          .controls
+            %input.input-xlarge{:name => "id", :type => "hidden" , :value =>@antwort}
+            %p
+              Frage:
+              =@antwort[:prompt]
+
+            %img#myImg{:src=>@antwort[:image],:alt => "kein Bild"}            
+
+            :javascript
+              myImg.onmousedown = GetCoordinates;
+    
+            %h5
+              Antwort
+            %p
+              X:
+              %input#x.input-xlarge{:name => "correct_x", :type => "text", :value => ""}
+            %p
+              Y:
+              %input#y.input-xlarge{:name => "correct_y", :type => "text", :value => ""}
+            %p
+              Antwort X-Achse            
+              =@correctAntwort[:correct_x]
+            %p
+              Antwort Y-Achse            
+              =@correctAntwort[:correct_y]
+            %br
+            Toleranz
+            %br
+            %input.input-xlarge{:name => "tolerance_radius", :type => "text" , :value =>@karte[:tolerance_radius]} 
+
+                          
+            .form-actions.bg-white      
+              %button.btn.btn-primary.btn-large.btn-block-phone(type="submit") Weiter
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/SelectPointInteraction")} Zurück
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+
+              

@@ -1,0 +1,188 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+  window.onload = function () {
+    var variable = document.getElementById("option").style.display;
+    
+    document.getElementById("hiddensee").addEventListener("click", function(){
+    if (variable == "none") {
+      document.getElementById("option").style.display = "block";
+      variable = "block";
+      }
+      else {
+        document.getElementById("option").style.display = "none";
+        variable = "none";
+      }
+    })
+  };    
+  
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/admin/frage_erstellen")} Frage erstellen
+    %span.divider /  
+  %li.active Multiple-Choice Frage
+    
+.page-header 
+  %h1 
+    Multiple-Choice Frage
+
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+    .span9    
+      %form.form-horizontal(method="GET"){:action => url_for("/admin/MultipleChoiceFrageAntwort")}
+        %legend
+          Optionen
+        .control-group
+          %label.control-label(for="option")
+          .controls
+            Description:
+            %p            
+              %textarea.input-xlarge{:name => "description", :rows => "4"}=@karte[:description]
+            Titel*:
+            %p
+              %input.input-xlarge{:name => "title", :type => "text" , :value =>@karte[:title]}
+            Id*:
+            %p        
+              =@karte[:id]
+              %input.input-xlarge{:name => "id", :type => "hidden" , :value =>@karte[:id]}
+            Deck*:        
+            %p    
+              -if @karte[:deck][:id] != ""
+                %select.input-xlarge{:name => "deck"}
+                  %option{:value=>@karte[:deck][:id]}=@karte[:deck][:name]
+                  = @decks.each_with_index do |key,i|
+                    %option{:value=>@decks[i][:id]}="Name: "+key[:name]+" , ID:"+key[:id]
+              -else
+                %select.input-xlarge{:name => "deck", :required =>""}
+                  %option{:value=>""}None
+                  = @decks.each_with_index do |key,i|
+                    %option{:value=>@decks[i][:id]}="Name: "+key[:name]+" , ID:"+key[:id]
+            validAttemptCount*:
+            %p          
+              %input.input-xlarge{:name=>"validAttemptCount", :type=>"text", :value => @karte[:valid_attempt_count]}                      
+            check_type:
+            %p          
+              -if @karte[:check_type][:id] != ""
+                %select.input-xlarge{:name => "check_type"}
+                  %option{:value=>@karte[:check_type][:id]}=@karte[:check_type][:name]
+                  = @check_type.each_with_index do |key,i|
+                    %option{:value=>@check_type[i][:id]}="Name: "+key[:name]+" , ID:"+key[:id]
+              -else
+                %select.input-xlarge{:name => "check_type", :required=>""}
+                  %option{:value=>""}None
+                  = @check_type.each_with_index do |key,i|
+                    %option{:value=>@check_type[i][:id]}="Name: "+key[:name]+" , ID:"+key[:id]
+
+            Kurs:
+            %p          
+              -if @karte[:courses][:id] != ""
+                %select.input-xlarge{:name => "courses"}
+                  %option{:value=>@karte[:courses][:id]}=@karte[:courses][:name]
+                  = @courses.each_with_index do |key,i|
+                    %option{:value=>@check_type[i][:id]}="Name: "+key[:name]+" , ID:"+key[:id]
+              -else
+                %select.input-xlarge{:name => "courses", :required=>""}
+                  %option{:value=>""}None
+                  = @courses.each_with_index do |key,i|
+                    %option{:value=>@courses[i][:id]}="Name: "+key[:name]+" , ID:"+key[:id]
+
+            Type:
+            %p          
+              -if @karte[:type] != ""
+                %select.input-xlarge{:name => "type"}
+                  %option{:value=>@karte[:type]}=@karte[:type_name]
+                  %option{:value=>"Action"}="Anwendungswissen"
+                  %option{:value=>"Fact"}="Faktenwissen"
+                  %option{:value=>"InstractionalKnowledge"}="Handlungswissen"
+                  %option{:value=>"Orientation"}="Orientierungswissen"
+                  
+              -else
+                %select.input-xlarge{:name => "type", :required=>""}
+                  %option{:value=>""}None
+                  %option{:value=>"Action"}="Anwendungswissen"
+                  %option{:value=>"Fact"}="Faktenwissen"
+                  %option{:value=>"InstractionalKnowledge"}="Handlungswissen"
+                  %option{:value=>"Orientation"}="Orientierungswissen"                    
+          
+            %p
+              %button#hiddensee.btn.btn-block-phone{:type => "button"} erweiterte Optionen
+
+        #option{:style => "display:none"}
+          %legend
+            erweiterte Optionen              
+          .control-group
+            %label.control-label(for="eOption")
+              .controls
+                time_solved:
+                %p        
+                  %input.input-xlarge{:name=>"TimesSolved", :type=>"text", :value => @karte[:times_solved]}
+                time_not_solved:
+                %p
+                  %input.input-xlarge{:name=>"TimesNotSolved", :type=>"text", :value => @karte[:times_not_solved]}
+                is_deactivated:
+                %p
+                  -if @karte[:is_deactivated] != ""
+                    %select.input-xlarge{:name => "IsDeactivated"}
+                      %option{:value=>@karte[:is_deactivated], :selected=>true}=@karte[:is_deactivated]              
+                      %option{:value=>"false"}Nein
+                      %option{:value=>"true"}Ja
+                  -else
+                    %select.input-xlarge{:name => "IsDeactivated"}
+                      %option{:value=>"false", :selected=>true}Nein
+                      %option{:value=>"true"}Ja
+                shuffle
+                %p
+                  -if @karte[:shuffle] != ""
+                    %select.input-xlarge{:name => "Shuffle"}
+                      %option{:value=>@karte[:shuffle], :selected=>true}=@karte[:shuffle]              
+                      %option{:value=>"false"}Nein
+                      %option{:value=>"true"}Ja
+                  -else
+                    %select.input-xlarge{:name => "shuffle"}
+                      %option{:value=>"true", :selected=>true}Ja
+                      %option{:value=>"false"}Nein
+                effort:
+                %p
+                  %input.input-xlarge{:name=>"effort", :type=>"text", :value => @karte[:effort]}    
+                only_given_by_admin:
+                %p
+                  -if (@karte[:is_only_given_by_admin] == false)
+                    %select.input-xlarge{:name => "IsOnlyGivenByAdmin"}
+                      %option{:value=>"false", :selected=>true}Nein
+                      %option{:value=>"true"}Ja
+                  -else
+                    %select.input-xlarge{:name => "IsOnlyGivenByAdmin"}
+                      %option{:value=>"false", :selected=>true}Nein
+                      %option{:value=>"true"}Ja              
+                      
+        %legend
+          Spieleransich        
+        .control-group
+          %label.control-label(for="spielerAnsicht")
+            .controls
+              Bild:
+              %p  
+                %input.input-xlarge{:name=>"image", :type=>"url" ,:value => @karte[:image]}    
+              Fragetext:
+              %p                    
+                %textarea.input-xlarge{:name=>"prompt", :rows => "4"}=@karte[:prompt]
+              Anzahl&nbspder&nbspAntworten:
+              %p
+                -if (@anzahlAntworten >= 1)
+                  %input.input-xlarge{:name=>"count", :type=>"text", :value => @anzahlAntworten}
+                -else
+                  %input.input-xlarge{:name=>"count", :type=>"text"}
+              Antworten&nbspwerden&nbspauf&nbspder&nbspnächsten&nbspSeite&nbspdefinitert.
+                
+                
+        .form-actions.bg-white      
+          %button.btn.btn-primary.btn-large.btn-block-phone{:type => :submit} Weiter
+          %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+    

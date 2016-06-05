@@ -1,0 +1,90 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+  
+  
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/adminView/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/adminView/Spielkarteneinstellung")} Spielkarteneinstellung
+    %span.divider /
+  %li.active Gruppe
+    
+.page-header 
+  %h1 
+    Spielkarteneinstellung
+
+.bg-white
+  .row
+    .span3
+      - pic = "/avatars/default-male.png" # redis_user.picture ||
+      %img.profile-image.img-rounded.pull-right.pull-left-phone(height=200 width=200 src="#{url_for(pic)}")
+      
+      .span3
+        = partial :image_upload_modal, :locals => locals
+        = partial :admin_connections
+      
+    .span9
+      %form.form-horizontal(method="POST"){:action => url_for(request.path_info)}
+        .control-group
+          %label.control-label(for="inputEmail")
+            Gruppe wählen:
+          .controls
+            .dropdown 
+              %button#dropdownMenu3.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                Bitte auswählen
+                %span.caret
+              %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu3"}
+                %li
+                  %a{:href=>"#"}       
+
+      
+      
+      
+        .control-group
+          %label.control-label(for="inputEmail")
+            Titel*:
+          .controls
+            .input-prepend
+              %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="email@uni-potsdam.de"){:value => "#"}
+     
+        .control-group
+          %label.control-label(for="inputEmail")
+            Id*:
+          .controls
+            .input-prepend
+              %input#inputEmail.input-xlarge(name="profile[email]" type="email" placeholder="Id wird generiet, keine Eingabe!!"){:value => "#"}    
+    
+        .control-group
+          %label.control-label(for="inputEmail")
+            Deck*:
+          .controls
+            .dropdown 
+              %button#dropdownMenu2.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                Bitte auswählen
+                %span.caret
+              %ul.dropdown-menu{"aria-labelledby" => "dropdownMenu2"}
+                %li
+                  %a{:href=>"#"}       
+        
+        .control-group
+          .controls
+            %button.btn.btn-large.btn-block-phone(type="button"){:style => "float:right"} Suchen
+      
+        %legend    
+        .control-group
+          %label.control-label(for="inputEmail")
+            Frage wählen:              
+          .controls
+            %textarea#inputAbout.input-xlarge(name="profile[about]" rows="4" placeholder="...")
+            
+               
+        .form-actions.bg-white      
+          %a.btn.btn-primary.btn-large.btn-block-phone{:href=>url_for("#")} Karte hinzufügen
+          %a.btn.btn-large.btn-block-phone{:href=>url_for("/adminView/Spielkarteneinstellung")} Zurück
+          %a.btn.btn-large.btn-block-phone{:href=>url_for("/adminView/home")} Abbrechen
+  

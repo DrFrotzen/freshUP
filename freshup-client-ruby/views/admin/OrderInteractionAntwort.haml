@@ -1,0 +1,46 @@
+
+  
+  
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li
+    %a{:href => url_for("/admin/OrderInteraction")} SingleChoiceFrage
+    %span.divider /  
+  %li.active Antwort erstellen
+    
+.page-header 
+  %h1 
+    Order Interaction
+  
+.bg-white
+  .row
+    .span3
+      = partial :admin_connections
+      
+      
+    .span9    
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/OrderInteractionAntwortII")}
+        %legend
+          Antwort erstellen
+        .control-group
+          %label.control-label(for="orderAntwort")
+          .controls
+            %input.input-xlarge{:name => "id", :type => "hidden" , :value =>@antwort}
+            Fragetext:
+            =@antwort[:prompt]
+            %h5
+              Antworten (in richtiger Reihenfolge angeben)            
+            %ol
+              -@karte[:choices].each_with_index do |value,i|
+                %li
+                  %input.input-xlarge{:name=>"antworten[]",:type=>"text", :value => value[:text]}    
+                   
+
+              
+        
+            .form-actions.bg-white      
+              %button.btn.btn-primary.btn-large.btn-block-phone(type="submit") Weiter
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/OrderInteraction")} Zurück
+              %a.btn.btn-large.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen

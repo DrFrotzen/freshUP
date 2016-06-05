@@ -1,0 +1,25 @@
+-url = url_for("#{request.script_name}")
+.well.debug
+  URL123
+  = url
+.clearfix
+-if url.match("/admin")
+  -url_2 = url[0, url.length - 6]
+
+-ranking.each do |one_group|
+  %tr
+  %td= one_group[:rank]
+  %td= one_group[:group_name]
+  %td
+    %ul.unstyled.memberlist.clearfix
+      -id = one_group[:group_id]
+      -if !(members[id.to_i][:item] == "EMPTY")
+        -array(members[id.to_i][:item]).each do |member_id|
+          %li.pull-left
+            -redis_user = User[member_id]
+            %a(rel="popover" data-original-title="#{redis_user.firstname} #{redis_user.lastname}" data-content="#{h redis_user.about}" data-placement="top" data-trigger="hover")
+              -#{:href => url_for("/profile/#{member_id}")}
+              %img.img-rounded{:src=>url_for("#{url_2}"+ redis_user.picture_small)}
+  %td= one_group[:score]
+  %td= one_group[:cards]
+  %td= one_group[:wrong_tries]

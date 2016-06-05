@@ -1,0 +1,50 @@
+:javascript
+  $(function($){
+    $('a').tooltip();
+  });
+
+%ul.breadcrumb.hidden-phone
+  %li
+    %a{:href => url_for("/admin/home")} Home
+    %span.divider /
+  %li.active Administrator löschen
+    
+.page-header 
+  %h1 
+    Administrator löschen
+
+.bg-white
+  .row      
+    .span3
+      = partial :admin_connections
+      
+    .span9    
+      %form.form-horizontal(method="POST"){:action => url_for("/admin/admin_loeschen")}
+        .control-group
+          %label.control-label
+          .controls        
+            Benutzername:
+            %p
+              %input.input-xlarge(name="username" type="text")        
+            Passwort:
+            %p
+              %input.input-xlarge(name="password" type="password")
+            %p  
+              %button.btn.btn-primary.btn-block-phone(type="submit") Admins anzeigen
+              
+           
+        %legend   
+        .control-group
+          .controls
+            Administrator auswählen:
+            .dropdown
+              %select{:name => "adminUser"}
+                %option{:value => ""}None
+                -if @admin_liste != {}
+                  = @admin_liste.each do |key|
+                    %option{:value => key[:name]}=key[:name]+","+key[:rank]        
+         
+            %p
+              %button.btn.btn-primary.btn-block-phone(type="submit") Admin löschen          
+              %a.btn.btn-block-phone{:href=>url_for("/admin/home")} Abbrechen
+        
